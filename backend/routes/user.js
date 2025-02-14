@@ -10,14 +10,13 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const { User } = require("../db/db");
 
 const signupSchema = zod.object({
-  username: zod.string().min(3),
+  username: zod.string().min(3).max(30),
   firstName: zod.string().min(1).max(30),
   lastName: zod.string().min(1).max(30),
   password: zod.string().min(6),
 });
 
 router.post("/signup", async (req, res) => {
-  console.log(req.body);
   const { success } = signupSchema.safeParse(req.body);
   if (!success) {
     return res.status(411).json({
@@ -48,6 +47,36 @@ router.post("/signup", async (req, res) => {
   res.status(201).json({
     message: "User Created Successfully",
     token: token,
+  });
+});
+
+const siginSchema = zod.object({
+  username: zod.string().min(3).max(30),
+  password: zod.string().min(6),
+});
+
+router.post("/signin", async (req, res) => {
+  const { success } = siginSchema.safeParse(req.body);
+  if (!success) {
+    return res.status(411).json({
+      message: "Incorrect inputs",
+    });
+  }
+  const user = User.findOne(req.body);
+  if (user) {
+    const userId = user.userId;
+    const token = jwt.sign(
+      {
+        userId,
+      },
+      JWT_SECRET
+    );
+    return res.json({
+      token: token,
+    });
+  }
+  res.json({
+    message: "Incorrect password or username",
   });
 });
 
