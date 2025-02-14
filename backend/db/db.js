@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const { title } = require("process");
 dotenv.config();
 const { Schema, model } = mongoose;
 
@@ -7,7 +8,7 @@ try {
   mongoose.connect(process.env.MONGO_URL);
   console.log("Connected to mongoose successfully");
 } catch (error) {
-  console.log(error);
+  console.log("Failed to connect to mongoose");
 }
 
 const userSchema = new Schema({
@@ -40,13 +41,13 @@ const userSchema = new Schema({
   },
 });
 
-const todoSchema = new Schema({
-  todoUser: {
+const taskSchema = new Schema({
+  userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  todo: {
+  title: {
     type: String,
     required: true,
     minLength: 1,
@@ -59,6 +60,6 @@ const todoSchema = new Schema({
 });
 
 const User = model("User", userSchema);
-const Todo = model("Todo", todoSchema);
+const Task = model("Task", taskSchema);
 
-module.exports = { User, Todo };
+module.exports = { User, Task };

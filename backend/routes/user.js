@@ -62,9 +62,11 @@ router.post("/signin", async (req, res) => {
       message: "Incorrect inputs",
     });
   }
-  const user = User.findOne(req.body);
+
+  const user = await User.findOne(req.body);
+
   if (user) {
-    const userId = user.userId;
+    const userId = user._id;
     const token = jwt.sign(
       {
         userId,
