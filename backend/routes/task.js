@@ -42,4 +42,13 @@ router.get("/tasks", authMiddleware, async (req, res) => {
   res.json(tasks);
 });
 
+router.get("/completed", authMiddleware, async (req, res) => {
+  userId = req.userId;
+  const completedTasks = await Task.find({
+    userId: userId,
+    completed: true,
+  });
+  res.json(completedTasks);
+});
+
 module.exports = router;
