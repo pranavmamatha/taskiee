@@ -7,7 +7,8 @@ const jwt = require("jsonwebtoken");
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const { User } = require("../db/db");
+const { User, Task } = require("../db/db");
+const { authMiddleware } = require("../middleware");
 
 const signupSchema = zod.object({
   username: zod.string().min(3).max(30),
@@ -79,6 +80,30 @@ router.post("/signin", async (req, res) => {
   }
   res.json({
     message: "Incorrect password or username",
+  });
+});
+
+router.get("/profile", authMiddleware, async (req, res) => {
+  const userId = req.userId;
+  const userInformation = await User.findOne({ _id: userId });
+  const totalTasks = await Task.countDocuments({
+    userId: userId,
+  });
+  const completedTasks = await Task.countDocuments({
+    userId: userId,
+    completed: true,
+  });
+  const pendingTasks = await Task.countDocuments({
+    userId: userId,
+    completed: false,
+  });
+  res.json({
+    username: userInformation.username,
+    firstName: userInformation.firstName,
+    lastName: userInformation.lastName,
+    total: totalTasks,
+    completed: completedTasks,
+    pending: pendingTasks,
   });
 });
 
