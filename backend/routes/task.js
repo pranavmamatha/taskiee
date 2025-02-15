@@ -8,6 +8,7 @@ const { Task } = require("../db/db");
 const taskSchema = zod.object({
   title: zod.string(),
   description: zod.string(),
+  completed: zod.boolean().optional(),
 });
 
 router.post("/create", authMiddleware, async (req, res) => {
@@ -31,6 +32,14 @@ router.post("/create", authMiddleware, async (req, res) => {
   res.json({
     message: "Succefully created a task",
   });
+});
+
+router.get("/tasks", authMiddleware, async (req, res) => {
+  userId = req.userId;
+  const tasks = await Task.find({
+    userId: userId,
+  });
+  res.json(tasks);
 });
 
 module.exports = router;
