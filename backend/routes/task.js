@@ -4,11 +4,11 @@ const router = express.Router();
 const { authMiddleware } = require("../middleware");
 
 const { Task } = require("../db/db");
+const { title } = require("process");
 
 const taskSchema = zod.object({
   title: zod.string(),
   description: zod.string(),
-  completed: zod.boolean().optional(),
 });
 
 router.post("/create", authMiddleware, async (req, res) => {
@@ -58,6 +58,31 @@ router.get("/pending", authMiddleware, async (req, res) => {
     completed: false,
   });
   res.json(pendingTasks);
+});
+
+const updateTaskSchema = zod.object({
+  title: zod.string().optional(),
+  description: zod.string().optional(),
+  completed: zod.boolean().optional(),
+});
+
+router.put("/update", authMiddleware, async (req, res) => {
+  const update = req.query.update || "";
+  if (update == "") {
+    return res.json({
+      message: "Invalid task Id",
+    });
+  }
+  const { success } = updateTaskSchema.safeParse(req.body);
+  if (!success) {
+    return res.json({
+      message: "Invalid input",
+    });
+  }
+  await Task.updateOne({ _id: update }, req.body);
+  res.json({
+    message: "Updated successfully",
+  });
 });
 
 module.exports = router;
