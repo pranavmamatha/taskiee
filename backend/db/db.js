@@ -57,6 +57,10 @@ const taskSchema = new Schema({
     required: true,
     minLength: 1,
   },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const User = model("User", userSchema);
