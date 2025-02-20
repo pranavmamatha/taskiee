@@ -4,7 +4,6 @@ const router = express.Router();
 const { authMiddleware } = require("../middleware");
 
 const { Task } = require("../db/db");
-const { title } = require("process");
 
 const taskSchema = zod.object({
   title: zod.string(),

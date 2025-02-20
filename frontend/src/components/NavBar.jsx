@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { data, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar({}) {
   const [response, setResponse] = useState({
     username: "0",
     firstName: "0",
@@ -11,6 +11,7 @@ export default function NavBar() {
     completed: 0,
     pending: 0,
   });
+  const [reload, setReload] = useState(0);
 
   useEffect(() => {
     axios
@@ -28,15 +29,18 @@ export default function NavBar() {
           completed: res.data.completed,
           pending: res.data.pending,
         });
-        console.log(response);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+
+    setTimeout(() => {
+      setReload(Math.random());
+    }, 10000);
+  }, [reload]);
 
   return (
-    <div className="flex justify-between p-3 pr-7 rounded-2xl m-5 border border-solid">
+    <div className="flex justify-between p-3 pr-7 rounded-2xl border border-solid">
       <Link to={"/dashboard"} className="text-3xl ml-5 text-center">
         Taskiee
       </Link>

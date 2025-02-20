@@ -58,7 +58,7 @@ export default function Login() {
             }}
           />
 
-          <Warning label={warning} />
+          <Warning label={warning} color={"red"} />
 
           <BottomWarning
             label={"Don't have a account?"}
