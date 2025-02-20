@@ -2,7 +2,7 @@ import axios from "axios";
 import Heading from "../components/Heading";
 import SubHeading from "../components/SubHeading";
 import InputBox from "../components/InputBox";
-import Button from "../components/Buttonutton";
+import Button from "../components/Button";
 import BottomWarning from "../components/BottomWarning";
 import Warning from "../components/Warning";
 import { useState, useEffect } from "react";
