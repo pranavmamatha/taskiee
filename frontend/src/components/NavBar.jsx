@@ -47,8 +47,8 @@ export default function NavBar({}) {
       <div className="flex">
         <div className="flex mr-5 text-xl mt-1.25">
           <div className="mr-4 justify-center">Tasks: {response.total}</div>
-          <div className="mr-4">completed: {response.completed}</div>
-          <div className="mr-4">pending: {response.pending}</div>
+          <div className="mr-4">Completed: {response.completed}</div>
+          <div className="mr-4">Pending: {response.pending}</div>
         </div>
         <Link
           to="/profile"
