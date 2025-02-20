@@ -22,7 +22,7 @@ export default function Dashboard() {
       return;
     }
     axios
-      .get("http://localhost:3000/api/v1/task/tasks", {
+      .get("https://taskiee-production.up.railway.app/api/v1/task/tasks", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },

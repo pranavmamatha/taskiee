@@ -9,7 +9,7 @@ export default function Task({ taskId, title, description, completed }) {
   const [positiveWarning, setPositiveWarning] = useState("");
   async function onClick(check) {
     const response = await axios.put(
-      `http://localhost:3000/api/v1/task/update?update=${taskId}`,
+      `https://taskiee-production.up.railway.app/api/v1/task/update?update=${taskId}`,
       {
         completed: check,
       },

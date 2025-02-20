@@ -65,7 +65,7 @@ export default function Signup() {
             label={`Signup`}
             onclick={async () => {
               const response = await axios.post(
-                "http://localhost:3000/api/v1/user/signup",
+                "https://taskiee-production.up.railway.app/api/v1/user/signup",
                 {
                   username: email,
                   firstName: firstName,

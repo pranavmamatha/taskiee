@@ -20,7 +20,7 @@ export default function Profile() {
     }
 
     axios
-      .get("http://localhost:3000/api/v1/user/profile", {
+      .get("https://taskiee-production.up.railway.app/api/v1/user/profile", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
