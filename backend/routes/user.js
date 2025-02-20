@@ -11,7 +11,7 @@ const { User, Task } = require("../db/db");
 const { authMiddleware } = require("../middleware");
 
 const signupSchema = zod.object({
-  username: zod.string().min(3).max(30),
+  username: zod.string().email().min(3).max(30),
   firstName: zod.string().min(1).max(30),
   lastName: zod.string().min(1).max(30),
   password: zod.string().min(6),
@@ -52,7 +52,7 @@ router.post("/signup", async (req, res) => {
 });
 
 const siginSchema = zod.object({
-  username: zod.string().min(3).max(30),
+  username: zod.string().email().min(3).max(30),
   password: zod.string().min(6),
 });
 
