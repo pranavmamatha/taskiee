@@ -20,7 +20,7 @@ const signupSchema = zod.object({
 router.post("/signup", async (req, res) => {
   const { success } = signupSchema.safeParse(req.body);
   if (!success) {
-    return res.status(411).json({
+    return res.json({
       message: "Incorrect inputs",
     });
   }
@@ -30,7 +30,7 @@ router.post("/signup", async (req, res) => {
   });
 
   if (existingUser) {
-    return res.status(409).json({
+    return res.json({
       message: "User already exist",
     });
   }

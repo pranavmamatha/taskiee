@@ -6,7 +6,6 @@ export default function User({
   completed,
   pending,
 }) {
-  console.log(firstName);
   return (
     <div className="border border-solid  rounded-2xl p-5">
       <div className="text-center">
