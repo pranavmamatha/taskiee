@@ -6,8 +6,10 @@ import InputBox from "../components/InputBox";
 import Button from "../components/button";
 import PositiveWarning from "../components/PositiveWarning";
 import Warning from "../components/Warning";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -15,6 +17,10 @@ export default function Dashboard() {
   const [positiveWarning, setPositiveWarning] = useState("");
   const [reload, setReload] = useState(0);
   useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      navigate("/login");
+      return;
+    }
     axios
       .get("http://localhost:3000/api/v1/task/tasks", {
         headers: {
@@ -27,7 +33,7 @@ export default function Dashboard() {
       .catch((error) => {
         console.log(error);
       });
-  }, [reload]);
+  }, [reload, navigate]);
 
   return (
     <div className="p-7">

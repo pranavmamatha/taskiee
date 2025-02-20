@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar({}) {
   const [response, setResponse] = useState({
@@ -12,8 +13,13 @@ export default function NavBar({}) {
     pending: 0,
   });
   const [reload, setReload] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+      return;
+    }
     axios
       .get("http://localhost:3000/api/v1/user/profile", {
         headers: {
@@ -37,7 +43,7 @@ export default function NavBar({}) {
     setTimeout(() => {
       setReload(Math.random());
     }, 10000);
-  }, [reload]);
+  }, [reload, navigate]);
 
   return (
     <div className="flex justify-between p-3 pr-7 rounded-2xl border border-solid">

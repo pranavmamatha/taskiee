@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import User from "../components/User";
 import Logout from "../components/logout";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const [username, setUsername] = useState("testuser");
@@ -10,8 +11,14 @@ export default function Profile() {
   const [total, setTotal] = useState(0);
   const [completed, setCompleted] = useState(0);
   const [pending, setPending] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+      return;
+    }
+
     axios
       .get("http://localhost:3000/api/v1/user/profile", {
         headers: {
@@ -30,7 +37,7 @@ export default function Profile() {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [navigate]);
 
   return (
     <div>

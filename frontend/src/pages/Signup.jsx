@@ -5,7 +5,7 @@ import InputBox from "../components/InputBox";
 import Button from "../components/button";
 import BottomWarning from "../components/BottomWarning";
 import Warning from "../components/Warning";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
@@ -15,6 +15,13 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const [warning, setWarning] = useState("");
   const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/dashboard");
+      return;
+    }
+  }, [navigate]);
+
   return (
     <div className="h-screen flex justify-center">
       <div className="flex flex-col justify-center">
