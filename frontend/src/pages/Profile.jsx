@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import User from "../components/User";
-import Logout from "../components/logout";
+import Logout from "../components/Logout";
 import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
